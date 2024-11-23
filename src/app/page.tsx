@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import AnimatedRobot from "@/components/AnimatedRobot";
+import AnimatedUnicorn from "@/components/AnimatedUnicorn";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,27 +38,27 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: `Hi there 👋 - this is Andy the agent. What would you like to learn about me?`,
+      content: `Hi there 👋 - I'm your UniChat assistant. How can I help you today?`,
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const exampleQuestions = [
-    "What is an OLAS Agent?",
-    "Give me an example of an OLAS Agent",
-    "Show me a agent that predicts prediction markets",
-    "How does the trader agent work?",
-    "How do I make my own agent?",
-    "Can you tell me how to stake OLAS in the easiest way possible?",
-    "Give me content I can look at to learn more about OLAS",
+    "What is Uniswap?",
+    "How do I swap tokens on Uniswap?",
+    "Explain liquidity pools",
+    "What are the risks of providing liquidity?",
+    "How do I bridge tokens?",
+    "What's the difference between V2,V3 and V4?",
+    "How do I create a token pair?",
   ];
 
   const mobileExampleQuestions = [
-    "What is an OLAS Agent?",
-    "Give me an example of an OLAS Agent",
-    "How to stake OLAS?",
-    "How do I make my own agent?",
+    "What is Uniswap?",
+    "How do I swap tokens?",
+    "Explain liquidity pools",
+    "What are the risks?",
   ];
 
   const [showExternalDialog, setShowExternalDialog] = useState(false);
@@ -68,11 +68,11 @@ export default function Home() {
     <AlertDialog open={showExternalDialog}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Leaving Agentscan</AlertDialogTitle>
+          <AlertDialogTitle>Leaving UniChat</AlertDialogTitle>
           <AlertDialogDescription>
-            You are about to leave Agentscan to visit an external website.
-            Please note that we cannot guarantee the safety or reliability of
-            external sites. Use any external software at your own risk.
+            You are about to leave UniChat to visit an external website. Please
+            note that we cannot guarantee the safety or reliability of external
+            sites. Use any external software at your own risk.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -246,20 +246,20 @@ export default function Home() {
 
   const getEmoji = (q: string) => {
     switch (q) {
-      case "What is an OLAS Agent?":
-        return "🤖";
-      case "Give me an example of an OLAS Agent":
-        return "💡";
-      case "Show me a agent that predicts prediction markets":
-        return "🎯";
-      case "How does the trader agent work?":
-        return "📈";
-      case "How do I make my own agent?":
-        return "🛠️";
-      case "Can you tell me how to stake OLAS in the easiest way possible?":
-        return "💰";
-      case "Give me content I can look at to learn more about OLAS":
-        return "📚";
+      case "What is Uniswap?":
+        return "🦄";
+      case "How do I swap tokens on Uniswap?":
+        return "💱";
+      case "Explain liquidity pools":
+        return "💧";
+      case "What are the risks of providing liquidity?":
+        return "⚠️";
+      case "How do I bridge tokens?":
+        return "🌉";
+      case "What's the difference between V2 and V3?":
+        return "📊";
+      case "How do I create a token pair?":
+        return "🔄";
       default:
         return "❓";
     }
@@ -327,8 +327,8 @@ export default function Home() {
                         }`}
                       >
                         <Avatar className="h-8 w-8 flex-shrink-0">
-                          <AvatarFallback className="bg-purple-100">
-                            <AnimatedRobot scale={0.2} />
+                          <AvatarFallback className="bg-pink-100">
+                            <AnimatedUnicorn scale={0.2} />
                           </AvatarFallback>
                         </Avatar>
                       </div>
@@ -348,7 +348,7 @@ export default function Home() {
                         }}
                         className={`rounded-lg px-4 py-2 ${
                           message.role === "user"
-                            ? "bg-purple-500 text-white"
+                            ? "bg-pink-500 text-white"
                             : "bg-muted"
                         }`}
                       >
@@ -416,8 +416,8 @@ export default function Home() {
                   <div className="flex mb-4 justify-start">
                     <div className="flex items-start gap-3 max-w-[80%]">
                       <Avatar className="h-8 w-8 flex-shrink-0">
-                        <AvatarFallback className="bg-purple-100">
-                          <AnimatedRobot scale={0.2} />
+                        <AvatarFallback className="bg-pink-100">
+                          <AnimatedUnicorn scale={0.2} />
                         </AvatarFallback>
                       </Avatar>
                       <div className="bg-muted rounded-lg px-4 py-2">
@@ -434,14 +434,14 @@ export default function Home() {
                   <Input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Ask Andy Anything..."
+                    placeholder="Ask UniChat anything..."
                     className="w-full h-12 md:h-14 pl-3 md:pl-5 pr-12 md:pr-14 text-sm md:text-base"
                     disabled={isLoading}
                   />
                   <Button
                     type="submit"
                     size="icon"
-                    className="absolute right-2 top-2 md:top-3 h-8 w-8 bg-purple-600 hover:bg-purple-700 text-white"
+                    className="absolute right-2 top-2 md:top-3 h-8 w-8 bg-pink-600 hover:bg-pink-700 text-white"
                     disabled={isLoading}
                   >
                     <Send className="h-4 w-4" />
@@ -497,7 +497,7 @@ export default function Home() {
             </Button>
             <Button
               variant="outline"
-              className="w-full md:w-auto bg-purple-600 text-white hover:bg-purple-700"
+              className="w-full md:w-auto bg-pink-600 text-white hover:bg-pink-700"
               onClick={() => {
                 setPendingUrl("https://docs.olas.network");
                 setShowExternalDialog(true);
