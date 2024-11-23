@@ -17,27 +17,12 @@ export const metadata: Metadata = {
   title: "UniChat",
   description: "UniChat",
   icons: {
-    icon: "/unicorn-og.svg",
-  },
-  openGraph: {
-    title: "UniChat",
-    description: "UniChat",
-    type: "website",
-    siteName: "UniChat",
-    images: [
+    icon: [
       {
-        url: "/unicorn-og.svg",
-        width: 1200,
-        height: 630,
-        alt: "UniChat",
+        url: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦄</text></svg>",
+        type: "image/svg+xml",
       },
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "UniChat",
-    description: "UniChat",
-    images: ["/unicorn-og.svg"],
   },
 };
 
