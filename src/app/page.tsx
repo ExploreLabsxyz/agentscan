@@ -212,7 +212,6 @@ export default function Home() {
         } catch (e) {}
       }
     } catch (error: any) {
-      console.log("Error:", error);
       toast({
         variant: "destructive",
         title: "An error occurred",
