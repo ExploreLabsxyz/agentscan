@@ -485,20 +485,10 @@ export default function Home() {
 
           <div className="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-8 max-w-3xl mx-auto px-2">
             <Button
-              className="w-full md:w-auto"
-              onClick={() => {
-                setPendingUrl("https://docs.autonolas.network/get_started/");
-                setShowExternalDialog(true);
-              }}
-            >
-              Launch your agent
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
-            <Button
               variant="outline"
               className="w-full md:w-auto bg-pink-600 text-white hover:bg-pink-700"
               onClick={() => {
-                setPendingUrl("https://docs.olas.network");
+                setPendingUrl("https://docs.uniswap.org");
                 setShowExternalDialog(true);
               }}
             >
