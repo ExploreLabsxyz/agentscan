@@ -12,10 +12,7 @@ interface UseMessagesProps {
   type?: "agent" | "general";
 }
 
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
+import { Message } from "@/types";
 
 export function useMessages({
   teamId,

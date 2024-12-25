@@ -10,13 +10,11 @@ import { ExternalLink, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import AnimatedRobot from "./AnimatedRobot";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
+import ChatHistoryPanel from "./ChatHistoryPanel";
+import { Message } from "@/types";
+import { Button } from "@/components/ui/button";
 
 interface ChatComponentProps {
   onSend?: (message: string) => Promise<void>;
@@ -26,6 +24,9 @@ interface ChatComponentProps {
   onExternalLinkClick?: (url: string) => void;
   children?: React.ReactNode;
   exampleQuestions?: string[];
+  showHistory?: boolean;
+  onSelectChat?: (chatId: string) => void;
+  selectedChatId?: string;
 }
 
 export default function ChatComponent({
@@ -35,6 +36,9 @@ export default function ChatComponent({
   placeholder = "Send a message to this agent...",
   onExternalLinkClick,
   exampleQuestions = [],
+  showHistory = false,
+  onSelectChat,
+  selectedChatId,
 }: ChatComponentProps) {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -158,11 +162,18 @@ export default function ChatComponent({
   }, [message]);
 
   return (
-    <div className="flex flex-col h-full">
-      <div
-        ref={messagesContainerRef}
-        className="flex-1 overflow-y-auto px-2 pb-2 min-h-0"
-      >
+    <div className="flex h-full">
+      {showHistory && onSelectChat && (
+        <ChatHistoryPanel
+          onSelectChat={onSelectChat}
+          selectedChatId={selectedChatId}
+        />
+      )}
+      <div className="flex-1 flex flex-col">
+        <div
+          ref={messagesContainerRef}
+          className="flex-1 overflow-y-auto px-2 pb-2 min-h-0"
+        >
         {messages.map((message, i) => (
           <div
             key={i}
@@ -313,6 +324,36 @@ export default function ChatComponent({
             <span className="sr-only">Send</span>
           </Button>
         </form>
+            {messages.length === 0 && !isLoading && (
+              <div className="text-center text-gray-500 mt-4">
+                No messages yet. Start a conversation!
+              </div>
+            )}
+          </div>
+          <form onSubmit={handleSubmit} className="p-4 border-t">
+            <div className="flex items-center gap-2">
+              <textarea
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  adjustTextareaHeight(e.target);
+                }}
+                onKeyDown={handleKeyDown}
+                placeholder={placeholder}
+                className="flex-1 resize-none overflow-hidden rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[2.5rem] max-h-[10rem]"
+                disabled={isLoading}
+              />
+              <Button
+                type="submit"
+                size="icon"
+                disabled={isLoading || !message.trim()}
+              >
+                <Send className="h-4 w-4" />
+                <span className="sr-only">Send</span>
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

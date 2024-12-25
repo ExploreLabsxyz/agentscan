@@ -3,15 +3,7 @@ import { useMessages } from "./use-messages";
 import { useAuth } from "./use-auth";
 import { useToast } from "./use-toast";
 
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
-
-interface Chat {
-  id: string;
-  created_at: string;
-}
+import { Message, Chat } from "@/types";
 
 interface UsePersistentChatProps {
   teamId?: string;
