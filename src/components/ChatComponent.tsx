@@ -1,20 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, useRef, useEffect, useMemo } from "react";
-
-import { Send } from "lucide-react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import { Send, ExternalLink, Loader2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
-import { ExternalLink, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import AnimatedRobot from "./AnimatedRobot";
-import { ChevronUp, ChevronDown, Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import ChatHistoryPanel from "./ChatHistoryPanel";
 import { Message } from "@/types";
-import { Button } from "@/components/ui/button";
 
 interface ChatComponentProps {
   onSend?: (message: string) => Promise<void>;
@@ -143,8 +139,8 @@ export default function ChatComponent({
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const adjustTextareaHeight = () => {
-    const textarea = textareaRef.current;
+  const adjustTextareaHeight = useCallback((element?: HTMLTextAreaElement | null) => {
+    const textarea = element || textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto";
       textarea.style.height = `${Math.min(textarea.scrollHeight, 400)}px`;
@@ -155,7 +151,7 @@ export default function ChatComponent({
         });
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     adjustTextareaHeight();
@@ -334,7 +330,7 @@ export default function ChatComponent({
             <div className="flex items-center gap-2">
               <textarea
                 value={message}
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   setMessage(e.target.value);
                   adjustTextareaHeight(e.target);
                 }}

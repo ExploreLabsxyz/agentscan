@@ -1,6 +1,6 @@
 import { logEvent } from "@/lib/amplitude";
 import { usePrivy } from "@privy-io/react-auth";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 export function useAuth() {
   const { login, logout, authenticated, user, getAccessToken } = usePrivy();
@@ -35,10 +35,15 @@ export function useAuth() {
     await updateUser();
   };
 
+  const memoizedSignIn = useCallback(async () => {
+    if (!authenticated) return;
+    login();
+    await updateUser();
+  }, [authenticated, login, updateUser]);
+
   useEffect(() => {
-    signIn();
-    //call /auth endpoint to update user
-  }, [authenticated]);
+    memoizedSignIn();
+  }, [memoizedSignIn]);
 
   return {
     login,

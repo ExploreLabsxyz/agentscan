@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -50,9 +50,37 @@ export default function ChatHistoryPanel({
     }
   };
 
+  const memoizedFetchChats = useCallback(async () => {
+    if (!isAuthenticated) return;
+
+    try {
+      setIsLoading(true);
+      const token = await getAccessToken();
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch chats");
+
+      const data = await response.json();
+      setChats(data);
+    } catch (error) {
+      console.error("Error fetching chats:", error);
+      toast({
+        variant: "destructive",
+        title: "Failed to load chat history",
+        description: "Please try again later",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isAuthenticated, getAccessToken, toast]);
+
   useEffect(() => {
-    fetchChats();
-  }, [isAuthenticated]);
+    memoizedFetchChats();
+  }, [memoizedFetchChats]);
 
   const handleNewChat = () => {
     onSelectChat("");
