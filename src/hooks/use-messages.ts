@@ -10,6 +10,7 @@ interface UseMessagesProps {
   teamId?: string;
   instanceId?: string;
   type?: "agent" | "general";
+  sessionId?: string;
 }
 
 interface Message {
@@ -21,10 +22,12 @@ export function useMessages({
   teamId,
   instanceId,
   type = "general",
+  sessionId: initialSessionId,
 }: UseMessagesProps = {}) {
   const { getAccessToken } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(initialSessionId);
   const { toast } = useToast();
   const { setShowAuthDialog } = useAgent();
   const { isAuthenticated } = useAuth();
@@ -49,6 +52,7 @@ export function useMessages({
             question: message,
             messages: [...messages, userMessage],
             teamId,
+            sessionId: currentSessionId,
             ...(type === "agent" && { type, instance: instanceId }),
           }),
         }
@@ -153,5 +157,7 @@ export function useMessages({
     setMessages,
     isLoading,
     sendMessage,
+    currentSessionId,
+    setCurrentSessionId,
   };
 }
