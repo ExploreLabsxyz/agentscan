@@ -5,7 +5,7 @@ import { useEffect, useCallback } from "react";
 export function useAuth() {
   const { login, logout, authenticated, user, getAccessToken } = usePrivy();
 
-  const updateUser = async () => {
+  const updateUser = useCallback(async () => {
     if (!authenticated) return;
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export function useAuth() {
         teamId: process.env.NEXT_PUBLIC_TEAM_ID || "",
       });
     }
-  };
+  }, [authenticated, getAccessToken, user?.id]);
 
   const signIn = async () => {
     if (!authenticated) return;

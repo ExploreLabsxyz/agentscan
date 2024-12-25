@@ -22,33 +22,7 @@ export default function ChatHistoryPanel({
   const { getAccessToken, isAuthenticated } = useAuth();
   const { toast } = useToast();
 
-  const fetchChats = async () => {
-    if (!isAuthenticated) return;
-
-    try {
-      setIsLoading(true);
-      const token = await getAccessToken();
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch chats");
-
-      const data = await response.json();
-      setChats(data);
-    } catch (error) {
-      console.error("Error fetching chats:", error);
-      toast({
-        variant: "destructive",
-        title: "Failed to load chat history",
-        description: "Please try again later",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Removed unused fetchChats function as it's replaced by memoizedFetchChats
 
   const memoizedFetchChats = useCallback(async () => {
     if (!isAuthenticated) return;

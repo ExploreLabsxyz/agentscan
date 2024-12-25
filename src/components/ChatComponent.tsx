@@ -25,7 +25,7 @@ interface ChatComponentProps {
   selectedChatId?: string;
 }
 
-export default function ChatComponent({
+function ChatComponent({
   onSend,
   initialMessage = "Hi there",
   messages: propMessages = [],
@@ -170,7 +170,7 @@ export default function ChatComponent({
           ref={messagesContainerRef}
           className="flex-1 overflow-y-auto px-2 pb-2 min-h-0"
         >
-        {messages.map((message, i) => (
+          {messages.map((message, i) => (
           <div
             key={i}
             className={`flex mb-4 ${
@@ -292,43 +292,17 @@ export default function ChatComponent({
             )}
           </div>
         )}
-        <form onSubmit={handleSubmit} className="relative">
-          <textarea
-            ref={textareaRef}
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-              adjustTextareaHeight();
-            }}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-            className="w-full min-h-[56px] max-h-[400px] pl-4 pr-12 py-4 text-sm rounded-2xl border border-gray-200 resize-none"
-            disabled={isLoading}
-            rows={1}
-            style={{
-              lineHeight: "1.5",
-              overflowY: "auto",
-            }}
-          />
-          <Button
-            type="submit"
-            size="icon"
-            className="absolute right-2 top-3 h-8 w-8 bg-purple-600 hover:bg-purple-700 text-white rounded-full"
-            disabled={isLoading || !message.trim()}
-          >
-            <Send className="h-4 w-4" />
-            <span className="sr-only">Send</span>
-          </Button>
-        </form>
-            {messages.length === 0 && !isLoading && (
-              <div className="text-center text-gray-500 mt-4">
-                No messages yet. Start a conversation!
-              </div>
-            )}
-          </div>
-          <form onSubmit={handleSubmit} className="p-4 border-t">
+          {messages.length === 0 && !isLoading && (
+            <div className="text-center text-gray-500 mb-4">
+              No messages yet. Start a conversation!
+            </div>
+          )}
+        </div>
+        <div className="p-4 border-t">
+          <form onSubmit={handleSubmit} className="relative">
             <div className="flex items-center gap-2">
               <textarea
+                ref={textareaRef}
                 value={message}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   setMessage(e.target.value);
@@ -354,3 +328,5 @@ export default function ChatComponent({
     </div>
   );
 }
+
+export default ChatComponent;
