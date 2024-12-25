@@ -30,22 +30,32 @@ const SessionButton: FC<SessionButtonProps> = ({
   isSelected, 
   onSelect, 
   className, 
-  children, 
-  ...props 
-}: SessionButtonProps) => (
-  <button
-    onClick={() => onSelect(session?.id || "")}
-    className={cn(
-      "w-full text-left px-4 py-2 rounded-lg transition-colors",
-      "hover:bg-gray-100 dark:hover:bg-gray-800",
-      isSelected ? "bg-gray-100 dark:bg-gray-800" : "bg-white dark:bg-gray-900",
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </button>
-);
+  children,
+  onClick,
+  type = "button",
+  disabled = false
+}: SessionButtonProps) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) onClick(event);
+    onSelect(session?.id || "");
+  };
+
+  return (
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={handleClick}
+      className={cn(
+        "w-full text-left px-4 py-2 rounded-lg transition-colors",
+        "hover:bg-gray-100 dark:hover:bg-gray-800",
+        isSelected ? "bg-gray-100 dark:bg-gray-800" : "bg-white dark:bg-gray-900",
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+};
 
 const ChatSessionsPanel: FC<ChatSessionsPanelProps> = ({ 
   onSelectSession, 
