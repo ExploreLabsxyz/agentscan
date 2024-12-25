@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { useAuth } from "../hooks/use-auth";
 import { cn } from "../lib/utils";
-import type { FC, ButtonHTMLAttributes, ReactNode } from "react";
+import type { FC, DetailedHTMLProps, ButtonHTMLAttributes } from "react";
 
 interface ChatSession {
   id: string;
@@ -14,12 +14,15 @@ interface ChatSessionsPanelProps {
   currentSessionId?: string;
 }
 
-interface SessionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface SessionButtonProps {
   session?: ChatSession;
   isSelected?: boolean;
   onSelect: (sessionId: string) => void;
   className?: string;
-  children?: ReactNode;
+  children?: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const SessionButton: FC<SessionButtonProps> = ({ 
@@ -48,12 +51,12 @@ const ChatSessionsPanel: FC<ChatSessionsPanelProps> = ({
   onSelectSession, 
   currentSessionId 
 }: ChatSessionsPanelProps) => {
-  const [sessions, setSessions] = useState<ChatSession[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [sessions, setSessions] = React.useState<ChatSession[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
   const { getAccessToken } = useAuth();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchSessions = async () => {
       try {
         setLoading(true);

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import * as React from "react";
 import { useToast } from "./use-toast";
 import { logEvent } from "@/lib/amplitude";
 import { useAuth } from "./use-auth";
@@ -25,9 +25,9 @@ export function useMessages({
   sessionId: initialSessionId,
 }: UseMessagesProps = {}) {
   const { getAccessToken } = useAuth();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentSessionId, setCurrentSessionId] = useState<string | undefined>(initialSessionId);
+  const [messages, setMessages] = React.useState<Message[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [currentSessionId, setCurrentSessionId] = React.useState<string | undefined>(initialSessionId);
   const { toast } = useToast();
   const { setShowAuthDialog } = useAgent();
   const { isAuthenticated } = useAuth();
