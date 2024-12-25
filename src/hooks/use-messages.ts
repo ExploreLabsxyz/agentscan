@@ -153,5 +153,5 @@ export function useMessages({
     setMessages,
     isLoading,
     sendMessage,
-  };
+  } as const;
 }
