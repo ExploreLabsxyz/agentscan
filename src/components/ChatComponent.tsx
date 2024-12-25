@@ -155,7 +155,7 @@ function ChatComponent({
 
   useEffect(() => {
     adjustTextareaHeight();
-  }, [message]);
+  }, [message, adjustTextareaHeight]);
 
   return (
     <div className="flex h-full">

@@ -29,12 +29,6 @@ export function useAuth() {
     }
   }, [authenticated, getAccessToken, user?.id]);
 
-  const signIn = async () => {
-    if (!authenticated) return;
-    login();
-    await updateUser();
-  };
-
   const memoizedSignIn = useCallback(async () => {
     if (!authenticated) return;
     login();
